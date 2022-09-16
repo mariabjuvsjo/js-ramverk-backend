@@ -1,0 +1,14 @@
+[
+    {
+        "name": "Doc test1",
+        "text": "hello its me"
+    },
+    {
+        "name": "Doc test2",
+        "text": "hello its me again"
+    },
+    {
+        "name": "Doc test3",
+        "text": "Goodbye"
+    }
+]
