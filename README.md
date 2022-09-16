@@ -1,9 +1,10 @@
+## SETUP
 Installerar alla olika moduler genom npm install <module> --save
 
 Starta servern genom npm start eller npm run watch för developers.
 
 
-
+## STRUCTURE
 Jag har valt att strukturera mina routes genom en Controller som hanterar alla requests till Databasen, vaje request har en egen funktion.
 
 
