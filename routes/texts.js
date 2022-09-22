@@ -1,29 +1,29 @@
 const express = require('express');
 const router = express.Router();
-const { createDoc, getAllDocs, getOneDoc, deleteOneDoc, updateDoc } = require('../controllers/textController')
-const Doc = require('../models/texts');
+const controllers = require('../controllers/textController');
+
 
 //const textModel = require("../models/texts");
 
 //get all docs
 router.get(
-    "/", getAllDocs);
+    "/", controllers.getAllDocs);
 
 //get a single doc
 router.get(
-    "/:id", getOneDoc
+    "/:id", controllers.getOneDoc
 
 );
 //create new doc
-router.post('/', createDoc);
+router.post('/', controllers.createDoc);
 
 //del docs route
 
-router.delete('/:id', deleteOneDoc);
+router.delete('/:id', controllers.deleteOneDoc);
 
 //update doc route
 
-router.patch('/:id', updateDoc);
+router.patch('/:id', controllers.updateDoc);
 
 
 
