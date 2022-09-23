@@ -1,5 +1,6 @@
+/* global it expect  afterEach describe beforeAll afterAll */
 const mongoose = require('mongoose');
-const { connectMongo, closeDb, dropCollections } = require("../db/testdatabase");
+const { connectMongo, closeDb } = require("../db/testdatabase");
 const Doc = require("../models/texts");
 
 describe("DOC MODEL TEST", () => {

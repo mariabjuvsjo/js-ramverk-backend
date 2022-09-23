@@ -3,7 +3,7 @@ const db = require('./db/database');
 
 const PORT = process.env.PORT || 3001;
 
-db.getDb()
+db.getDb();
 
 
 app.listen(PORT, () => {

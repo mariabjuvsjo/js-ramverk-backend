@@ -1,11 +1,7 @@
-//process.env.NODE_ENV = 'test';
+/* global it expect describe beforeAll afterAll */
 const request = require('supertest');
 const app = require('../app');
-const conn = require('../db/database');
-const mongoose = require('mongoose');
-const { connectMongo, closeDb, dropCollections } = require("../db/testdatabase");
-const testdb = require("../db/database");
-const Doc = require("../models/texts");
+const { connectMongo, closeDb } = require("../db/testdatabase");
 
 describe("API ROUTE TEST", () => {
     beforeAll(async () => {
@@ -15,8 +11,6 @@ describe("API ROUTE TEST", () => {
     afterAll(async () => {
         await closeDb();
     });
-
-
 
     describe("GET ROUTE ON EMPTY DATABASE", () => {
         it("should return empty array", async () => {
