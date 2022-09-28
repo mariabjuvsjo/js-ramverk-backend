@@ -55,7 +55,7 @@ describe("API ROUTE TEST", () => {
     });
 
 
-    describe("POST ROUTE ADD DOC ON WRONG INFO", () => {
+    /*describe("POST ROUTE ADD DOC ON WRONG INFO", () => {
         it("should return 400 and error mess", async () => {
             const res = await request(app).post(
                 `/text`).send({ name: 'testPost' });
@@ -63,7 +63,7 @@ describe("API ROUTE TEST", () => {
             expect(res.statusCode).toBe(400);
             expect(res.body.error).toBe('Doc validation failed: text: Path `text` is required.');
         });
-    });
+    });*/
 
 
     describe("DELETE ROUTE", () => {
