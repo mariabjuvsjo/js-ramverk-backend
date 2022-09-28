@@ -3,16 +3,9 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const docSchema = new Schema({
-    name: {
-        type: String,
-        required: true
-    },
-    text: {
-        type: String,
-        required: true
-    }
-}, { timestamps: true });
-
+    name: String,
+    text: Object,
+})
 module.exports = mongoose.model("Doc", docSchema);
 
 
