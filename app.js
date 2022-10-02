@@ -4,6 +4,7 @@ const express = require("express");
 const morgan = require('morgan');
 const cors = require('cors');
 const text = require('./routes/texts');
+const user = require('./routes/users')
 
 const app = express();
 
@@ -29,6 +30,8 @@ if (process.env.NODE_ENV !== 'test') {
 }
 
 app.use('/text', text);
+
+app.use('/users', user);
 
 app.get('/', (req, res) => {
     res.json({

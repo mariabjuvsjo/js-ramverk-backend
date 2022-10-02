@@ -1,29 +1,30 @@
 const express = require('express');
 const router = express.Router();
 const controllers = require('../controllers/textController');
+const { checkToken } = require('../middleware/authorize')
 
 
 //const textModel = require("../models/texts");
 
 //get all docs
 router.get(
-    "/", controllers.getAllDocs);
+    "/", checkToken, controllers.getAllDocs);
 
 //get a single doc
 router.get(
-    "/:id", controllers.getOneDoc
+    "/:id", checkToken, controllers.getOneDoc
 
 );
 //create new doc
-router.post('/', controllers.createDoc);
+router.post('/', checkToken, controllers.createDoc);
 
 //del docs route
 
-router.delete('/:id', controllers.deleteOneDoc);
+router.delete('/:id', checkToken, controllers.deleteOneDoc);
 
 //update doc route
 
-router.patch('/:id', controllers.updateDoc);
+router.patch('/:id', checkToken, controllers.updateDoc);
 
 
 

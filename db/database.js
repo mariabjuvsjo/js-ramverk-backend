@@ -4,8 +4,6 @@ const testDb = require('./testdatabase');
 
 async function getDb() {
     let dsn = process.env.MONGO_URI;
-
-
     if (process.env.NODE_ENV === 'test') {
         await testDb.connectMongo();
     } else {

@@ -21,7 +21,7 @@ const io = new Server(server, {
         methods: ["GET", "POST", "PATCH"],
     }
 })
-db.getDb();
+
 
 io.on("connection", (socket) => {
     socket.on('get-document', async docId => {
@@ -47,9 +47,17 @@ io.on("connection", (socket) => {
 
 
 
-server.listen(PORT, () => {
-    console.log('Listening on port: ' + PORT);
-});
+async function starter() {
+    await db.getDb();
+    server.listen(PORT, () => {
+        console.log('Listening on port: ' + PORT);
+    });
+
+
+}
+
+starter()
+
 
 async function findDoc(id) {
     if (id == null) return
@@ -57,3 +65,5 @@ async function findDoc(id) {
     const document = await Doc.findById(id)
     if (document) return document
 }
+
+
