@@ -8,7 +8,7 @@ const { checkToken } = require('../middleware/authorize')
 
 //get all docs
 router.get(
-    "/", controllers.getAllDocs);
+    "/", checkToken, controllers.getAllDocs);
 
 // get all shared docs
 

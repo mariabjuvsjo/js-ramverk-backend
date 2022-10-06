@@ -22,7 +22,7 @@ const createDoc = asyncHandler(async (req, res) => {
 //get all docs
 
 const getAllDocs = async (req, res) => {
-    const docs = await Doc.find({});
+    const docs = await Doc.find({ user: req.user.id });
 
     res.status(200).json(docs);
 };

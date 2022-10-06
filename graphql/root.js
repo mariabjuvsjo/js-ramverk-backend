@@ -53,12 +53,37 @@ const RootQuery = new GraphQLObjectType({
 const mutation = new GraphQLObjectType({
     name: 'Mutation',
     fields: {
-        addUser: {
+        updateDoc: {
+            type: DocType,
+            args: {
+                id: { type: GraphQLNonNull(GraphQLID) },
+                allowed_users: { type: GraphQLString }
+            },
+            resolve(parent, args) {
+                return Doc.findByIdAndUpdate(args.id, {
+                    $push: {
+                        allowed_users: args.allowed_users
+                    }
+                })
+            }
+        },
+        deleteUser: {
             type: UserType,
             args: {
-                username: { type: GraphQLNonNull(GraphQLString) },
+                id: { type: GraphQLNonNull(GraphQLID) }
+            },
+            resolve(parent, args) {
+                Doc.find({ user: args.id }).then(
+                    (docs) => {
+                        docs.forEach(user => {
+                            user.remove();
+                        })
+                    }
 
+                )
+                return User.findByIdAndRemove(args.id)
             }
+
         }
     }
 });
