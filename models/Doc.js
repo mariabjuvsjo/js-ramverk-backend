@@ -10,8 +10,12 @@ const docSchema = new Schema({
     },
     name: String,
     text: Object,
+    allowed_users: []
 })
-module.exports = mongoose.model("Doc", docSchema);
+
+const Doc = mongoose.model("Doc", docSchema);
+module.exports = Doc;
+
 
 
 

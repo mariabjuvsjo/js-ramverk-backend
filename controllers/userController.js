@@ -2,7 +2,7 @@ require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const asyncHandler = require('express-async-handler');
-const User = require('../models/users')
+const User = require('../models/User')
 
 // @desc register new User
 // @route POST /users
@@ -30,7 +30,7 @@ const regUser = asyncHandler(async (req, res) => {
         firstname,
         lastname,
         username,
-        password: hashPass
+        password: hashPass,
     });
 
     if (user) {

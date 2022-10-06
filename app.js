@@ -3,8 +3,10 @@ require('dotenv').config();
 const express = require("express");
 const morgan = require('morgan');
 const cors = require('cors');
+const { graphqlHTTP } = require('express-graphql');
+const schema = require('./graphql/root')
 const text = require('./routes/texts');
-const user = require('./routes/users')
+const user = require('./routes/users');
 
 const app = express();
 
@@ -28,6 +30,13 @@ if (process.env.NODE_ENV !== 'test') {
     // use morgan to log at command line
     app.use(morgan('combined')); // 'combined' outputs the Apache style LOGs
 }
+
+app.use('/graphql', graphqlHTTP({
+    schema,
+    graphiql: process.env.NODE_ENV === 'development'
+
+
+}))
 
 app.use('/text', text);
 

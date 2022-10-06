@@ -3,7 +3,7 @@ const db = require('./db/database');
 const http = require("http");
 const cors = require('cors');
 const { Server } = require('socket.io')
-const Doc = require('./models/texts');
+const Doc = require('./models/Doc');
 
 const PORT = process.env.PORT || 3001;
 

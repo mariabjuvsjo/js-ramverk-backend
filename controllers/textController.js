@@ -1,17 +1,17 @@
-const Doc = require('../models/texts');
+const Doc = require('../models/Doc');
 const mongoose = require('mongoose');
 const asyncHandler = require('express-async-handler');
-const User = require('../models/users')
+const User = require('../models/User')
 
 
 
 //create new doc
 const createDoc = asyncHandler(async (req, res) => {
-    const { name, text } = req.body;
+    const { name, text, allowed_users } = req.body;
 
     //add doc to db
     try {
-        const doc = await Doc.create({ name, text, user: req.user.id });
+        const doc = await Doc.create({ name, text, user: req.user.id, allowed_users });
 
         res.status(200).json(doc);
     } catch (error) {
@@ -22,11 +22,17 @@ const createDoc = asyncHandler(async (req, res) => {
 //get all docs
 
 const getAllDocs = async (req, res) => {
-    const docs = await Doc.find({ user: req.user.id });
+    const docs = await Doc.find({});
 
     res.status(200).json(docs);
 };
 
+async function getSharedDocs(user) {
+
+    const docs = await Doc.find({ allowed_users: user });
+
+    return docs
+}
 
 
 //get a single doc
@@ -87,22 +93,30 @@ const updateDoc = async (req, res) => {
     if (!doc) {
         return res.status(404).json({ error: 'No such doc' });
     }
+    /**
+        const user = await User.findById(req.user.id)
+    
+        //check if there is a user
+        if (!user) {
+            res.status(401)
+            throw new Error('No such user')
+        }
+    
+        //check if doc user is equal to logged in user
+        if (doc.user.toString() !== user.id) {
+            res.status(401)
+            throw new Error('user not auth')
+        } */
 
-    const user = await User.findById(req.user.id)
+    const allowed_users = req.body.allowed_users
 
-    //check if there is a user
-    if (!user) {
-        res.status(401)
-        throw new Error('No such user')
-    }
+    const name = req.body.name
 
-    //check if doc user is equal to logged in user
-    if (doc.user.toString() !== user.id) {
-        res.status(401)
-        throw new Error('user not auth')
-    }
+    const text = req.body.text
 
-    const updateDoc = await Doc.findByIdAndUpdate(req.params.id, { ...req.body });
+
+
+    const updateDoc = await Doc.findByIdAndUpdate(req.params.id, { $push: { allowed_users } });
 
 
 
@@ -115,5 +129,6 @@ module.exports = {
     getAllDocs,
     getOneDoc,
     deleteOneDoc,
-    updateDoc
+    updateDoc,
+    getSharedDocs
 };

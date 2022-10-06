@@ -8,7 +8,10 @@ const { checkToken } = require('../middleware/authorize')
 
 //get all docs
 router.get(
-    "/", checkToken, controllers.getAllDocs);
+    "/", controllers.getAllDocs);
+
+// get all shared docs
+
 
 //get a single doc
 router.get(
@@ -24,7 +27,7 @@ router.delete('/:id', checkToken, controllers.deleteOneDoc);
 
 //update doc route
 
-router.patch('/:id', checkToken, controllers.updateDoc);
+router.patch('/:id', controllers.updateDoc);
 
 
 
