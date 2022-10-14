@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 
+
 const Schema = mongoose.Schema;
 
 const docSchema = new Schema({
@@ -10,7 +11,11 @@ const docSchema = new Schema({
     },
     name: String,
     text: Object,
-    allowed_users: []
+    comments: Array,
+    allowed_users: [{
+        type: String
+    }
+    ]
 })
 
 const Doc = mongoose.model("Doc", docSchema);

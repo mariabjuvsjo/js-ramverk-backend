@@ -8,7 +8,7 @@ const { checkToken } = require('../middleware/authorize')
 
 //get all docs
 router.get(
-    "/", checkToken, controllers.getAllDocs);
+    "/", controllers.getAllDocs);
 
 // get all shared docs
 
@@ -16,6 +16,16 @@ router.get(
 //get a single doc
 router.get(
     "/:id", checkToken, controllers.getOneDoc
+
+);
+
+router.get(
+    "comments/:id", controllers.getOneDocsComment
+
+);
+
+router.get(
+    "allowedusers/:id", controllers.getOneDocsUsers
 
 );
 //create new doc

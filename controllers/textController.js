@@ -7,11 +7,11 @@ const User = require('../models/User')
 
 //create new doc
 const createDoc = asyncHandler(async (req, res) => {
-    const { name, text, allowed_users } = req.body;
+    const { name, text } = req.body;
 
     //add doc to db
     try {
-        const doc = await Doc.create({ name, text, user: req.user.id, allowed_users });
+        const doc = await Doc.create({ name, text, user: req.user.id });
 
         res.status(200).json(doc);
     } catch (error) {
@@ -22,7 +22,7 @@ const createDoc = asyncHandler(async (req, res) => {
 //get all docs
 
 const getAllDocs = async (req, res) => {
-    const docs = await Doc.find({ user: req.user.id });
+    const docs = await Doc.find();
 
     res.status(200).json(docs);
 };
@@ -52,6 +52,41 @@ const getOneDoc = async (req, res) => {
 
     res.status(200).json(doc);
 };
+
+const getOneDocsComment = async (req, res) => {
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({ error: 'No such id' });
+    }
+
+
+    const doc = await Doc.findById(id).select('comments -_id');
+
+    if (!doc) {
+        return res.status(404).json({ error: 'No such id' });
+    }
+
+    res.status(200).json(doc);
+};
+
+const getOneDocsUsers = async (req, res) => {
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({ error: 'No such id' });
+    }
+
+
+    const doc = await Doc.findById(id).select('allowed_users -_id');
+
+    if (!doc) {
+        return res.status(404).json({ error: 'No such id' });
+    }
+
+    res.status(200).json(doc);
+};
+
 
 //delete a doc
 const deleteOneDoc = async (req, res) => {
@@ -108,19 +143,23 @@ const updateDoc = async (req, res) => {
             throw new Error('user not auth')
         } */
 
-    const allowed_users = req.body.allowed_users
 
-    const name = req.body.name
+    let thingsToUpdate = {
+        $set: {
+            name: req.body.name,
+            text: req.body.text
+        },
+        $push: {
+            comments: req.body.comments,
+            allowed_users: req.body.allowed_users
+        }
+    }
 
-    const text = req.body.text
+    const updatedDoc = await Doc.findByIdAndUpdate(req.params.id, thingsToUpdate);
 
 
 
-    const updateDoc = await Doc.findByIdAndUpdate(req.params.id, { $push: { allowed_users } });
-
-
-
-    res.status(200).json(updateDoc);
+    res.status(200).json(updatedDoc);
 };
 
 
@@ -130,5 +169,7 @@ module.exports = {
     getOneDoc,
     deleteOneDoc,
     updateDoc,
-    getSharedDocs
+    getSharedDocs,
+    getOneDocsComment,
+    getOneDocsUsers
 };

@@ -27,7 +27,6 @@ io.on("connection", (socket) => {
     socket.on('get-document', async docId => {
         const document = await findDoc(docId)
 
-        console.log(document.text)
         socket.join(docId)
 
         //console.log("hello" + text)
