@@ -7,10 +7,17 @@ const { graphqlHTTP } = require('express-graphql');
 const schema = require('./graphql/root')
 const text = require('./routes/texts');
 const user = require('./routes/users');
+const apimail = require('./routes/emails');
 
 const app = express();
 
 app.use(express.json());
+
+app.use(cors());
+
+app.options('*', cors());
+
+app.disable('x-powered-by');
 
 app.use((req, res, next) => {
     //console.log(req.method);
@@ -20,16 +27,19 @@ app.use((req, res, next) => {
 
 //const port = process.env.PORT || 3001;
 
-app.use(cors());
 
-app.options('*', cors());
-
-app.disable('x-powered-by');
 
 if (process.env.NODE_ENV !== 'test') {
     // use morgan to log at command line
     app.use(morgan('combined')); // 'combined' outputs the Apache style LOGs
 }
+
+
+app.use('/text', text);
+
+app.use('/apimail', apimail);
+
+app.use('/users', user);
 
 app.use('/graphql', graphqlHTTP({
     schema,
@@ -38,9 +48,7 @@ app.use('/graphql', graphqlHTTP({
 
 }))
 
-app.use('/text', text);
 
-app.use('/users', user);
 
 app.get('/', (req, res) => {
     res.json({
