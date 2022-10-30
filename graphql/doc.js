@@ -25,6 +25,8 @@ const DocType = new GraphQLObjectType({
                 return User.findById(parent.user);
             },
         },
+        code: { type: GraphQLString },
+        docType: { type: GraphQLString },
         allowed_users: { type: new GraphQLList(GraphQLString) }
     })
 

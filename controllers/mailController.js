@@ -9,8 +9,8 @@ const emailApi = {
             to: adress.email,
             from: 'mariabjuv@gmail.com',
             subject: 'Edit a document with friends',
-            text: 'You got asked to join your team and edit a document klick the link to register today',
-            html: `<a href="https://www.student.bth.se/~mabs21/editor">Click to sign UP</a> `
+            text: 'You got asked to join your team and edit a document klick the link to register today'
+            //html: `<a href="https://www.student.bth.se/~mabs21/editor">Click to sign UP</a> `
 
         }
 

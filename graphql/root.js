@@ -25,6 +25,13 @@ const RootQuery = new GraphQLObjectType({
                 return Doc.find({});
             }
         },
+        doc: {
+            type: DocType,
+            args: { id: { type: GraphQLID } },
+            resolve(parent, args) {
+                return Doc.findById(args.id)
+            }
+        },
         docsbyUserId: {
             type: new GraphQLList(DocType),
             args: { user: { type: GraphQLID } },
@@ -57,13 +64,11 @@ const mutation = new GraphQLObjectType({
             type: DocType,
             args: {
                 id: { type: GraphQLNonNull(GraphQLID) },
-                allowed_users: { type: GraphQLString }
+                code: { type: GraphQLString }
             },
             resolve(parent, args) {
                 return Doc.findByIdAndUpdate(args.id, {
-                    $push: {
-                        allowed_users: args.allowed_users
-                    }
+                    code: args.code
                 })
             }
         },

@@ -39,6 +39,18 @@ router.delete('/:id', checkToken, controllers.deleteOneDoc);
 
 router.patch('/:id', controllers.updateDoc);
 
+router.post("/email", async (req, res) => {
+
+    const adress = req.body
+
+    console.log(adress)
+
+    await controllers.createEmail(adress)
+
+    res.status(200).json(res)
+});
+
+
 
 
 

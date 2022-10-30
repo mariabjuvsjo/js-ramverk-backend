@@ -7,11 +7,11 @@ const User = require('../models/User')
 
 //create new doc
 const createDoc = asyncHandler(async (req, res) => {
-    const { name, text } = req.body;
+    const { name, docType } = req.body;
 
     //add doc to db
     try {
-        const doc = await Doc.create({ name, text, user: req.user.id });
+        const doc = await Doc.create({ name, docType, user: req.user.id });
 
         res.status(200).json(doc);
     } catch (error) {
@@ -128,26 +128,12 @@ const updateDoc = async (req, res) => {
     if (!doc) {
         return res.status(404).json({ error: 'No such doc' });
     }
-    /**
-        const user = await User.findById(req.user.id)
-    
-        //check if there is a user
-        if (!user) {
-            res.status(401)
-            throw new Error('No such user')
-        }
-    
-        //check if doc user is equal to logged in user
-        if (doc.user.toString() !== user.id) {
-            res.status(401)
-            throw new Error('user not auth')
-        } */
-
 
     let thingsToUpdate = {
         $set: {
             name: req.body.name,
-            text: req.body.text
+            text: req.body.text,
+            code: req.body.code
         },
         $push: {
             comments: req.body.comments,

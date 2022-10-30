@@ -11,6 +11,8 @@ const docSchema = new Schema({
     },
     name: String,
     text: Object,
+    code: String,
+    docType: String,
     comments: Array,
     allowed_users: [{
         type: String
